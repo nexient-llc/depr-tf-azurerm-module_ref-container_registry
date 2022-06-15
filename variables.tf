@@ -71,6 +71,12 @@ variable "resource_types" {
   }
 }
 
+variable "use_azure_region_abbr" {
+  description = "Whether to use region abbreviation e.g. eastus -> eus"
+  type = bool
+  default = false
+}
+
 #################################################
 # Variables associated with resource group module
 ##################################################
