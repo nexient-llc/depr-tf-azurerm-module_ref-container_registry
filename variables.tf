@@ -1,5 +1,5 @@
 #################################################
-#Variables associated with resource naming module
+# Variables associated with resource naming module
 ##################################################
 
 variable "logical_product_name" {
@@ -52,8 +52,27 @@ variable "instance_resource" {
   }
 }
 
+variable "resource_types" {
+  description = "Map of cloud resources to be used in this module"
+  type = map(object({
+    type = string
+    maximum_length = number
+  }))
+
+  default = {
+    "resource_group" = {
+      type           = "rg"
+      maximum_length = 63
+    }
+    "container_registry" = {
+      type           = "acr"
+      maximum_length = 30
+    }
+  }
+}
+
 #################################################
-#Variables associated with resource group module
+# Variables associated with resource group module
 ##################################################
 variable "resource_group" {
   description = "resource group primitive options"
@@ -67,7 +86,7 @@ variable "resource_group" {
 }
 
 #################################################
-#Variables associated with container registry module
+# Variables associated with container registry module
 ##################################################
 
 variable "container_registry" {

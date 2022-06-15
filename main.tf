@@ -1,7 +1,7 @@
 module "resource_name" {
   source    = "git::git@github.com:nexient-llc/tf-module-resource_name.git?ref=main"
 
-  for_each = local.resource_types
+  for_each = var.resource_types
 
   logical_product_name = var.logical_product_name
   region               = var.resource_group.location
