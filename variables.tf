@@ -40,7 +40,6 @@ variable "instance_env" {
   }
 }
 
-
 variable "instance_resource" {
   type        = number
   description = "Number that represents the instance of the resource."
@@ -49,6 +48,31 @@ variable "instance_resource" {
   validation {
     condition     = var.instance_resource >= 0 && var.instance_resource <= 100
     error_message = "Instance number should be between 1 to 100."
+  }
+}
+
+variable "use_azure_region_abbr" {
+  description = "Whether to use region abbreviation e.g. eastus -> eus"
+  type = bool
+  default = false
+}
+
+variable "resource_types" {
+  description = "Map of cloud resource types to be used in this module"
+  type = map(object({
+    type = string
+    maximum_length = number
+  }))
+  
+  default = {
+    "resource_group" = {
+      type           = "rg"
+      maximum_length = 63
+    }
+    "container_registry" = {
+      type           = "acr"
+      maximum_length = 30
+    }
   }
 }
 

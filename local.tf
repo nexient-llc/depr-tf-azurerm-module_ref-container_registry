@@ -1,14 +1,4 @@
 locals {
-  resource_types = {
-    "resource_group" = {
-      type           = "rg"
-      maximum_length = 63
-    }
-    "container_registry" = {
-      type           = "acr"
-      maximum_length = 30
-    }
-  }
 
   resource_group = {
     location = var.resource_group.location
