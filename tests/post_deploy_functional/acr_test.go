@@ -19,10 +19,17 @@ import (
 type TerraTestSuite struct {
 	suite.Suite
 	TerraformOptions *terraform.Options
+	suiteSetupDone   bool
 }
 
 // setup to do before any test runs
 func (suite *TerraTestSuite) SetupSuite() {
+	// Ensure that the destroy method is called even if the apply fails
+	defer func() {
+		if !suite.suiteSetupDone {
+			terraform.Destroy(suite.T(), suite.TerraformOptions)
+		}
+	}()
 	tempTestFolder := test_structure.CopyTerraformFolderToTemp(suite.T(), "../..", ".")
 	_ = files.CopyFile(path.Join("..", "..", ".tool-versions"), path.Join(tempTestFolder, ".tool-versions"))
 	pwd, _ := os.Getwd()
@@ -31,6 +38,7 @@ func (suite *TerraTestSuite) SetupSuite() {
 		VarFiles:     [](string){path.Join(pwd, "..", "test.tfvars")},
 	})
 	terraform.InitAndApplyAndIdempotent(suite.T(), suite.TerraformOptions)
+	suite.suiteSetupDone = true
 }
 
 // TearDownAllSuite has a TearDownSuite method, which will run after all the tests in the suite have been run.
