@@ -1,5 +1,5 @@
 module "resource_name" {
-  source    = "git::git@github.com:nexient-llc/tf-module-resource_name.git?ref=main"
+  source    = "github.com/nexient-llc/tf-module-resource_name.git?ref=0.1.0"
 
   for_each = var.resource_types
 
@@ -14,7 +14,7 @@ module "resource_name" {
 }
 
 module "container_registry" {
-    source = "git::git@github.com:nexient-llc/tf-azurerm-module-container_registry.git?ref=main"
+    source = "github.com/nexient-llc/tf-azurerm-module-container_registry.git?ref=0.1.0"
 
     resource_group              = local.resource_group
     container_registry_name     = local.container_registry_name
@@ -22,7 +22,7 @@ module "container_registry" {
 }
 
 module "resource_group" {
-  source = "git::git@github.com:nexient-llc/tf-azurerm-module-resource_group.git?ref=main"
+  source = "github.com/nexient-llc/tf-azurerm-module-resource_group.git?ref=0.1.0"
 
   resource_group      = var.resource_group
   resource_group_name = local.resource_group_name
